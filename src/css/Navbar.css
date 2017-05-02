@@ -1,0 +1,27 @@
+.Navbar {
+  background-color: #222;
+  height: 50px;
+  color: white; 
+}
+
+.menuButton {
+	display: inline-block;
+	cursor: pointer;
+	position: relative;
+	margin-left: 35px;
+	top: -3px;
+}
+
+.Navbar h3 {
+	display: inline-block;
+	margin-top: 13px;
+	padding-left: 20px;
+}
+
+#menu {
+	position: absolute;
+	top: 50px;
+	left: 0;
+	background-color: white;
+	z-index: 99
+}

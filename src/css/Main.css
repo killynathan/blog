@@ -1,0 +1,13 @@
+#main {
+	position: relative;
+}
+
+.blogPosts {
+	padding-top: 50px;
+	width: 600px;
+	margin: 0 auto;
+}
+
+.blogPost {
+	margin-bottom: 30px;
+}
