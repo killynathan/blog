@@ -1,9 +1,8 @@
-#main {
+#mainPage {
 	position: relative;
 }
 
 .blogPosts {
-	padding-top: 50px;
 	width: 600px;
 	margin: 0 auto;
 }

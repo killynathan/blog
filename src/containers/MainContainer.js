@@ -17,7 +17,7 @@ class MainContainer extends Component {
 		const {user} = this.props;
 		
 		return (
-			<div id='main'>
+			<div id='mainPage' className='page'>
 				<BlogPostsPage blogPosts={user.blogPosts} />
 			</div>
 		)

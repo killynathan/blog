@@ -1,20 +1,15 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import '../css/Navbar.css';
 
 const Menu = (props) => (
 	// const {name, user} = this.props;
 	<div id='menu'> 
 		<ul>
-			<li>Home</li>
+			<li><Link to='/'>Home</Link></li>
 			<li>Profile</li>
-			<li>New Post</li>
-			<li>Hello</li>
-			<li>Hello</li>
-			<li>Hello</li>
-			<li>Hello</li>
-			<li>Hello</li>
-			<li>Hello</li>
-			<li>Hello</li>
+			<li><Link to='/newPost'>New Post</Link></li>
+			<li>Account</li>
 		</ul>
 	</div>
 )

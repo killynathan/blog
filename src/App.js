@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import {
+	BrowserRouter as Router,
+	Route
+} from 'react-router-dom';
+
 import './App.css';
 import NavbarContainer from './containers/NavbarContainer';
 import MainContainer from './containers/MainContainer';
+import NewPostPageContainer from './containers/NewPostPageContainer';
 
 var testUser = {
 	name: 'nate',
@@ -18,6 +23,14 @@ var testUser = {
 		{
 			title: 'first post!',
 			content: 'what a wonderful day today is'
+		},
+		{
+			title: 'first post!',
+			content: 'what a wonderful day today is'
+		},
+		{
+			title: 'first post!',
+			content: 'what a wonderful day today is'
 		}
 	]
 };
@@ -27,8 +40,17 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <NavbarContainer user={testUser}/>
-        <MainContainer user={testUser}/>
+       
+        <Router>
+        	<div>
+        		<NavbarContainer user={testUser}/>
+        		<Route exact path='/' 
+        			render={(renderProps) => (
+        				<MainContainer user={testUser}/>
+        			)}/>
+	        	<Route path='/newPost' component={NewPostPageContainer}/>
+	        </div>
+      	</Router>
       </div>
     );
   }
