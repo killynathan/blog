@@ -9,4 +9,4 @@ const BlogPostsPage = ({blogPosts}) => (
 	</div>
 )
 
-export default BlogPostsPage;
+export default BlogPostsPage; 

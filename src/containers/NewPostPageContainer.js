@@ -28,21 +28,27 @@ class NewPostPageContainer extends Component {
 
 	submitPost(e) {
 		e.preventDefault();
-		// this.props.user.blogPosts.append({
-		// 	title: 'new post',
-		// 	content: 'woot!'
-		// });
-		alert('sup');
+		var post = {
+			title: this.state.postTitle,
+			body: this.state.postBody
+		};
+		this.props.submitPost(post);
+	}
+
+	getTitleErrorMessage() {
+		if (this.state.postTitle.length === 0) {
+			return 'Need title!';
+		}
+		return '';
 	}
 
 	render() {
 		return (
-			<div className='page' style={pageStyle}>
-				<p>title in postPage:{this.state.postTitle}</p>
-				<p>body in postPage: {this.state.postBody}</p>
-				<NewPostPage postTitle={this.state.postTitle} postBody={this.state.postBody} 
+			<div className='page' onClick={this.props.dismissMenu}>
+				<NewPostPage 
+					postTitle={this.state.postTitle} postBody={this.state.postBody} 
 					handleTitleChange={this.updateTitle.bind(this)} handleBodyChange={this.updateBody.bind(this)}
-					handleSubmit={this.submitPost.bind(this)}/>
+					handleSubmit={this.submitPost.bind(this)} titleErrorMessage={this.getTitleErrorMessage()}/>
 			</div>
 		)
 	}
@@ -50,7 +56,7 @@ class NewPostPageContainer extends Component {
 
 const pageStyle = {
 	width: '500px',
-	margin: '0 auto'
+	margin: '0 auto' 
 }
 
 

@@ -8,5 +8,17 @@
 }
 
 .blogPost {
-	margin-bottom: 30px;
+	margin-bottom: 100px;
+}
+
+.blogPostTitle {
+	font-family: 'Roboto';
+	margin-bottom: 15px;
+	font-size: 40px;
+}
+
+.blogPostBody {
+	font-family: 'Open Sans';
+	color: rgb(77, 77, 77);
+	font-size: 17px;
 }
