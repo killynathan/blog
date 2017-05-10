@@ -1,0 +1,33 @@
+.LRPage {
+	height: 100vh;
+	width: 100%;
+	display: table;
+}
+
+.LRPageElements {
+	text-align: center;
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.LRPageElements input {
+	display: block;
+	margin: 15px auto;
+	font-family: 'Open Sans';
+	font-size: 15px;
+	height: 35px;
+	width: 280px;
+	padding-left: 10px;
+}
+
+.LRPageElements h1 {
+	font-family: 'Lora';
+}
+
+.LRButton {
+	height: 30px;
+	width: 100px;
+	border-radius: 5px;
+	font-family: 'Lora';
+
+}

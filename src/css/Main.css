@@ -12,7 +12,7 @@
 }
 
 .blogPostTitle {
-	font-family: 'Roboto';
+	font-family: 'Lora';
 	margin-bottom: 15px;
 	font-size: 40px;
 }
@@ -21,4 +21,28 @@
 	font-family: 'Open Sans';
 	color: rgb(77, 77, 77);
 	font-size: 17px;
+}
+
+.profile {
+	height: 100vh;
+	width: 100%;
+	display: table;
+}
+
+.profileElements {
+	text-align: center;
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.profileName {
+	font-family: 'Lora';
+	font-weight: 700;
+	font-size: 40px;
+}
+
+.profileDescription {
+	font-family: 'Lora';
+	font-weight: 400;
+	font-size: 20px;
 }

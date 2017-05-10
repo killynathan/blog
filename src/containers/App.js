@@ -10,38 +10,32 @@ import NavbarContainer from '../containers/NavbarContainer';
 import MainContainer from '../containers/MainContainer';
 import NewPostPageContainer from '../containers/NewPostPageContainer';
 import Menu from '../components/Menu';
-import axios from 'axios';
+import ProfilePageContainer from './ProfilePageContainer';
+import LoginPageContainer from './LoginPageContainer';
 
 var URL = 'http://localhost:8000';
 
 function postUser() {
+	console.log(JSON.stringify({
+			username: 'bob',
+			blogPosts: [
+				{
+					title: 'test!',
+					body: 'test'
+				}
+			]
+		}));
 	fetch(URL + '/users', {
 		method: 'POST',
 		headers: {
             'Content-Type': 'application/json'
 		},
 		body: JSON.stringify({
-			username: 'nate',
+			username: 'bob',
 			blogPosts: [
 				{
-					title: 'cool',
-					body: 'today is a good day. today is a good day. today is a good day. today is a good day. today is a good day. today is a good day. today is a good day. today is a good day. today is a good day. today is a good day. today is a good day. '
-				},
-				{
-					title: 'second post',
-					body: 'today is a bad day'
-				},
-				{
-					title: 'first post!',
-					body: 'what a wonderful day today is'
-				},
-				{
-					title: 'first post!',
-					body: 'what a wonderful day today is'
-				},
-				{
-					title: 'first post!',
-					body: 'what a wonderful day today is'
+					title: 'test!',
+					body: 'test'
 				}
 			]
 		})
@@ -66,13 +60,13 @@ class App extends Component {
 	}
 
 	getUser(user) {
-		return fetch(URL + '/users/' + user)
+		fetch(URL + '/users/' + user)
 			.then(resp => resp.json())
 			.then(resp => {
 				this.setState({
 					user: resp.data
 				});
-				return resp.data
+				resp.data
 			});
 	}
 
@@ -109,15 +103,27 @@ class App extends Component {
 	        	<div>
 	        		<NavbarContainer user={this.state.user} toggleMenu={this.toggleMenu.bind(this)} dismissMenu={this.dismissMenu.bind(this)}/>
 	        		{this.state.menuActive && <Menu />}
-	        		<Route exact path='/' 
-	        			render={(renderProps) => (
-	        				<MainContainer user={this.state.user} dismissMenu={this.dismissMenu.bind(this)}/>
-	        			)}/>
-		        	<Route 
-		        		path='/newPost' 
-	        			render={(renderProps) => (
-	        				<NewPostPageContainer submitPost={this.submitPost.bind(this)} Router={Router} dismissMenu={this.dismissMenu.bind(this)}/>
-	        			)}/>
+	        		<div className='page'>
+		        		<Route exact path='/' 
+		        			render={(renderProps) => (
+		        				<MainContainer user={this.state.user} dismissMenu={this.dismissMenu.bind(this)}/>
+		        			)}/>
+		        		<Route 
+		        			path='/u/:username'
+		        			render={(renderProps) => (
+		        				<ProfilePageContainer renderProps={renderProps}/>
+		        			)}/>
+			        	<Route 
+			        		path='/newPost' 
+		        			render={(renderProps) => (
+		        				<NewPostPageContainer submitPost={this.submitPost.bind(this)} Router={Router} dismissMenu={this.dismissMenu.bind(this)}/>
+		        			)}/>
+		        		<Route
+		        			path='/login'
+		        			render={(renderProps) => (
+		        				<LoginPageContainer />
+		        			)}/>
+	        		</div>
 		        </div>
 	      	</Router>
 	      </div>
