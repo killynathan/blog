@@ -1,77 +1,76 @@
 import React, { Component } from 'react';
 import {
 	BrowserRouter as Router,
-	Route
+	Route,
+	Redirect
 } from 'react-router-dom';
-import 'whatwg-fetch';
+import {URL} from '../config/config';
 
 import '../css/App.css';
 import NavbarContainer from '../containers/NavbarContainer';
-import MainContainer from '../containers/MainContainer';
+import HomePageContainer from '../containers/HomePageContainer';
 import NewPostPageContainer from '../containers/NewPostPageContainer';
 import Menu from '../components/Menu';
 import ProfilePageContainer from './ProfilePageContainer';
 import LoginPageContainer from './LoginPageContainer';
+import RegisterPageContainer from './RegisterPageContainer';
+import WelcomePage from '../components/WelcomePage';
 
-var URL = 'http://localhost:8000';
-
-function postUser() {
-	console.log(JSON.stringify({
-			username: 'bob',
-			blogPosts: [
-				{
-					title: 'test!',
-					body: 'test'
-				}
-			]
-		}));
-	fetch(URL + '/users', {
-		method: 'POST',
-		headers: {
-            'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({
-			username: 'bob',
-			blogPosts: [
-				{
-					title: 'test!',
-					body: 'test'
-				}
-			]
-		})
-	})
-}
+import {isLoggedIn, getUsername} from '../services/auth/auth';
 
 class App extends Component { 
 
 	constructor(props) {
 		super(props);
 
+		this.setUser = this.setUser.bind(this);
 
 		this.state = {
-			user: {
-				username: '',
-				blogPosts: []
-			},
+			user: null,
 			menuActive: false
 		}
 
-		this.getUser('nate');
+		this.getUser();
 	}
 
-	getUser(user) {
-		fetch(URL + '/users/' + user)
-			.then(resp => resp.json())
+	getUser() {
+		let username = getUsername();
+		if (!username) {
+			this.setState({user: null})
+		}
+		else {
+			fetch(URL + '/users/' + username + '/public')
 			.then(resp => {
-				this.setState({
-					user: resp.data
-				});
-				resp.data
-			});
+				return resp.json();
+			})
+			.then(resp => {
+				if (resp.error) {
+					this.setState({
+						user: null
+					});
+				}
+				else {
+					this.setState({
+						user: resp.data
+					});
+				}
+			})
+
+		}
+
+
+	}
+
+	setUser(_user) {
+		this.setState({
+			user: _user
+		});	
 	}
 
 	submitPost(post) {
-		this.state.user.blogPosts.unshift(post);
+		this.setState({
+			user: this.state.user.blogPosts.unshift(post)
+		})
 		this.updateUser();
 	}
 
@@ -103,10 +102,14 @@ class App extends Component {
 	        	<div>
 	        		<NavbarContainer user={this.state.user} toggleMenu={this.toggleMenu.bind(this)} dismissMenu={this.dismissMenu.bind(this)}/>
 	        		{this.state.menuActive && <Menu />}
-	        		<div className='page'>
+	        		<div>
 		        		<Route exact path='/' 
 		        			render={(renderProps) => (
-		        				<MainContainer user={this.state.user} dismissMenu={this.dismissMenu.bind(this)}/>
+		        				isLoggedIn() ? (
+		        					<HomePageContainer user={this.state.user} dismissMenu={this.dismissMenu.bind(this)}/>
+		        				) : (
+		        					<WelcomePage />
+		        				)
 		        			)}/>
 		        		<Route 
 		        			path='/u/:username'
@@ -121,8 +124,22 @@ class App extends Component {
 		        		<Route
 		        			path='/login'
 		        			render={(renderProps) => (
-		        				<LoginPageContainer />
+		        				isLoggedIn() ? (
+		        					<Redirect to ='/'/>
+		        				) : (
+		        					<LoginPageContainer setUser={this.setUser}/>
+		        				)
 		        			)}/>
+		        		<Route
+		        			path='/register'
+		        			render={(renderProps) => (
+		        				isLoggedIn() ? (
+		        					<Redirect to='/'/>
+		        				) : (
+		        					<RegisterPageContainer setUser={this.setUser}/>
+		        				)
+		        			)}/>
+		        		
 	        		</div>
 		        </div>
 	      	</Router>

@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import LoginPage from '../components/LoginPage';
 import '../css/LoginRegistration.css';
+import {URL} from '../config/config';
+import {login} from '../services/auth/auth';
 
 class LoginPageContainer extends Component {
 	constructor(props) {
@@ -8,7 +10,9 @@ class LoginPageContainer extends Component {
 
 		this.updateUsername = this.updateUsername.bind(this);
 		this.updatePassword = this.updatePassword.bind(this);
-		this.login = this.login.bind(this);
+		this.handleLogin = this.handleLogin.bind(this);
+
+		this.setUser = this.props.setUser;
 
 		this.state = {
 			username: '',
@@ -31,13 +35,15 @@ class LoginPageContainer extends Component {
 		});
 	}
 
-	login(e) {
+	handleLogin(e) {
 		e.preventDefault();
 		var user = {
-			username: this.state.username,
-			password: this.state.password
-		}
-		console.log(user);
+			email: this.state.username,
+			password: this.state.password,
+		};
+		login(user).then((user) => {
+			this.setUser(user);
+		});
 	}
 
 	render() {
@@ -48,7 +54,7 @@ class LoginPageContainer extends Component {
 				password={this.state.password}
 				handleUsernameChange={this.updateUsername}
 				handlePasswordChange={this.updatePassword}
-				handleLogin={this.login}/>
+				handleLogin={this.handleLogin}/>
 			</div>
 		)
 	}

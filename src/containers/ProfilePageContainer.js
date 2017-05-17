@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import BlogPosts from '../components/BlogPosts';
 import Profile from '../components/Profile';
 
+import {URL} from '../config/config';
+
 class ProfilePageContainer extends Component {
 	constructor(props) {
 		super(props);
 
-		this.URL = 'http://localhost:8000';
-
 		this.state = {
-			profile: {
+			user: {
 				profile: {},
 				blogPosts: []
 			}
@@ -21,32 +21,32 @@ class ProfilePageContainer extends Component {
 	}
 
 	getUser(username) {
-		fetch(this.URL + '/users/' + username + '/public')
+		fetch(URL + '/users/' + username + '/public')
 			.then(resp => {
 				return resp.json();
 			})
 			.then(resp => {
 				if (resp.error) {
 					this.setState({
-						profile: null
+						user: null
 					});
 				}
 				else {
 					this.setState({
-						profile: resp.data
+						user: resp.data
 					});
 				}
 			})
 	}
 
 	render() {
-		const found = this.state.profile;
+		let found = this.state.user;
 		return (
 			<div>
 			{found ? (
 				<div>
-					<Profile profile={this.state.profile.profile} />
-					<BlogPosts blogPosts={this.state.profile.blogPosts}/>
+					<Profile profile={this.state.user.profile} />
+					<BlogPosts blogPosts={this.state.user.blogPosts}/>
 				</div>
 			) : (
 				<h1 style={{fontSize:60}}>USER NOT FOUND</h1>
