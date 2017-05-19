@@ -48,3 +48,15 @@
 #menu a {
 	color: black;
 }
+
+#auth {
+	float: right;
+	margin-right: 15px;
+	margin-top: 13px;
+}
+
+#auth li {
+	font-family: 'Lora';
+	display: inline-block;
+	margin-right: 20px;
+}

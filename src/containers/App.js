@@ -24,6 +24,7 @@ class App extends Component {
 		super(props);
 
 		this.setUser = this.setUser.bind(this);
+		this.getUser = this.getUser.bind(this);
 
 		this.state = {
 			user: null,
@@ -125,7 +126,7 @@ class App extends Component {
 		        			path='/login'
 		        			render={(renderProps) => (
 		        				isLoggedIn() ? (
-		        					<Redirect to ='/'/>
+		        					<Redirect to='/'/>
 		        				) : (
 		        					<LoginPageContainer setUser={this.setUser}/>
 		        				)
