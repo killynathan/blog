@@ -7,22 +7,6 @@
 	margin: 0 auto;
 }
 
-.blogPost {
-	margin-bottom: 100px;
-}
-
-.blogPostTitle {
-	font-family: 'Lora';
-	margin-bottom: 15px;
-	font-size: 40px;
-}
-
-.blogPostBody {
-	font-family: 'Open Sans';
-	color: rgb(77, 77, 77);
-	font-size: 17px;
-}
-
 .profile {
 	height: 100vh;
 	width: 100%;

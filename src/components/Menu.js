@@ -7,7 +7,7 @@ const Menu = (props) => (
 		<ul>
 			<li><Link to='/'>Home</Link></li>
 			<li>Profile</li>
-			<li><Link to='/newPost'>New Post</Link></li>
+			<li><Link to='/write'>Write</Link></li>
 			<li>Account</li>
 			<li>Timeline</li>
 		</ul>

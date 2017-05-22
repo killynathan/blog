@@ -6,6 +6,7 @@
     "react-scripts": "0.9.5"
   },
   "dependencies": {
+    "autosize": "^3.0.20",
     "bootstrap": "^3.3.7",
     "react": "^15.5.4",
     "react-bootstrap": "^0.30.8",

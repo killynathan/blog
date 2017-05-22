@@ -8,13 +8,14 @@ import {URL} from '../config/config';
 
 import '../css/App.css';
 import NavbarContainer from '../containers/NavbarContainer';
-import HomePageContainer from '../containers/HomePageContainer';
-import NewPostPageContainer from '../containers/NewPostPageContainer';
+import HomePageContainer from '../pages/HomePageContainer';
+import WritePageContainer from '../containers/WritePageContainer';
 import Menu from '../components/Menu';
 import ProfilePageContainer from './ProfilePageContainer';
 import LoginPageContainer from './LoginPageContainer';
 import RegisterPageContainer from './RegisterPageContainer';
 import WelcomePage from '../components/WelcomePage';
+import BlogPostPageContainer from '../pages/BlogPostPageContainer';
 
 import {isLoggedIn, getUsername} from '../services/auth/auth';
 
@@ -25,19 +26,23 @@ class App extends Component {
 
 		this.setUser = this.setUser.bind(this);
 		this.getUser = this.getUser.bind(this);
+		this.updateUser = this.updateUser.bind(this);
 
 		this.state = {
 			user: null,
-			menuActive: false
-		}
+			menuActive: false,
+			getUserStatus: 'pending'
+		};
+	}
 
+	componentDidMount() {
 		this.getUser();
 	}
 
 	getUser() {
 		let username = getUsername();
 		if (!username) {
-			this.setState({user: null})
+			this.setState({user: null, getUserStatus: 'no one logged in'});
 		}
 		else {
 			fetch(URL + '/users/' + username + '/public')
@@ -47,12 +52,14 @@ class App extends Component {
 			.then(resp => {
 				if (resp.error) {
 					this.setState({
-						user: null
+						user: null,
+						getUserStatus: 'fail'
 					});
 				}
 				else {
 					this.setState({
-						user: resp.data
+						user: resp.data,
+						getUserStatus: 'success'
 					});
 				}
 			})
@@ -68,11 +75,9 @@ class App extends Component {
 		});	
 	}
 
-	submitPost(post) {
-		this.setState({
-			user: this.state.user.blogPosts.unshift(post)
-		})
-		this.updateUser();
+	updateUser(_user) {
+		this.setState(_user);
+		this.putUserUpdate();
 	}
 
 	toggleMenu(e) {
@@ -84,7 +89,7 @@ class App extends Component {
 		this.setState({menuActive: false});
 	}
 
-	updateUser() {
+	putUserUpdate() {
 		fetch(URL + '/users/' + this.state.user.username, {
 			method: 'PUT',
 			headers: {
@@ -95,6 +100,9 @@ class App extends Component {
 	}
 
   	render() {
+  		if (this.state.getUserStatus === 'pending') {
+  			return <h1 style={{textAlign: 'center', marginTop: 200}}>Loading</h1>
+  		}
 
     	return (
       		<div className="App">
@@ -117,11 +125,17 @@ class App extends Component {
 		        			render={(renderProps) => (
 		        				<ProfilePageContainer renderProps={renderProps}/>
 		        			)}/>
-			        	<Route 
-			        		path='/newPost' 
+		        		<Route 
+		        			path='/b/:id'
 		        			render={(renderProps) => (
-		        				<NewPostPageContainer submitPost={this.submitPost.bind(this)} Router={Router} dismissMenu={this.dismissMenu.bind(this)}/>
+		        				<BlogPostPageContainer renderProps={renderProps}/>
 		        			)}/>
+			        	<Route 
+			        		path='/write' 
+		        			render={(renderProps) => (
+		        				<WritePageContainer updateUser={this.updateUser} user={this.state.user} dismissMenu={this.dismissMenu.bind(this)}/>
+		        			)}/>
+
 		        		<Route
 		        			path='/login'
 		        			render={(renderProps) => (
@@ -150,3 +164,4 @@ class App extends Component {
 }
 
 export default App;
+ 
