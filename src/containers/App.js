@@ -9,12 +9,12 @@ import {URL} from '../config/config';
 import '../css/App.css';
 import NavbarContainer from '../containers/NavbarContainer';
 import HomePageContainer from '../pages/HomePageContainer';
-import WritePageContainer from '../containers/WritePageContainer';
+import WritePageContainer from '../pages/WritePageContainer';
 import Menu from '../components/Menu';
-import ProfilePageContainer from './ProfilePageContainer';
+import ProfilePageContainer from '../pages/ProfilePageContainer';
 import LoginPageContainer from './LoginPageContainer';
 import RegisterPageContainer from './RegisterPageContainer';
-import WelcomePage from '../components/WelcomePage';
+import WelcomePage from '../pages/WelcomePage';
 import BlogPostPageContainer from '../pages/BlogPostPageContainer';
 
 import {isLoggedIn, getUsername} from '../services/auth/auth';
@@ -27,6 +27,7 @@ class App extends Component {
 		this.setUser = this.setUser.bind(this);
 		this.getUser = this.getUser.bind(this);
 		this.updateUser = this.updateUser.bind(this);
+		this.dismissMenu = this.dismissMenu.bind(this);
 
 		this.state = {
 			user: null,
@@ -45,7 +46,7 @@ class App extends Component {
 			this.setState({user: null, getUserStatus: 'no one logged in'});
 		}
 		else {
-			fetch(URL + '/users/' + username + '/public')
+			fetch(URL + '/users/' + username)
 			.then(resp => {
 				return resp.json();
 			})
@@ -57,6 +58,7 @@ class App extends Component {
 					});
 				}
 				else {
+					console.log('wtf');
 					this.setState({
 						user: resp.data,
 						getUserStatus: 'success'
@@ -101,21 +103,20 @@ class App extends Component {
 
   	render() {
   		if (this.state.getUserStatus === 'pending') {
-  			return <h1 style={{textAlign: 'center', marginTop: 200}}>Loading</h1>
+  			return <h1 style={{textAlign: 'center', marginTop: 200}}>{this.state.getUserStatus}</h1>
   		}
 
     	return (
-      		<div className="App">
-       
+      		<div className="App" onClick={this.dissmissMenu}>
        		<Router>
 	        	<div>
-	        		<NavbarContainer user={this.state.user} toggleMenu={this.toggleMenu.bind(this)} dismissMenu={this.dismissMenu.bind(this)}/>
+	        		<NavbarContainer user={this.state.user} toggleMenu={this.toggleMenu.bind(this)} dismissMenu={this.dismissMenu}/>
 	        		{this.state.menuActive && <Menu />}
 	        		<div>
 		        		<Route exact path='/' 
 		        			render={(renderProps) => (
 		        				isLoggedIn() ? (
-		        					<HomePageContainer user={this.state.user} dismissMenu={this.dismissMenu.bind(this)}/>
+		        					<HomePageContainer user={this.state.user} dismissMenu={this.dismissMenu}/>
 		        				) : (
 		        					<WelcomePage />
 		        				)
@@ -131,9 +132,13 @@ class App extends Component {
 		        				<BlogPostPageContainer renderProps={renderProps}/>
 		        			)}/>
 			        	<Route 
-			        		path='/write' 
+			        		path='/write/:id?' 
 		        			render={(renderProps) => (
-		        				<WritePageContainer updateUser={this.updateUser} user={this.state.user} dismissMenu={this.dismissMenu.bind(this)}/>
+		        				isLoggedIn() ? (
+		        					<WritePageContainer dismissMenu={this.dismissMenu.bind(this)} renderProps={renderProps}/>
+		        				) : (
+		        					<WelcomePage />
+		        				)
 		        			)}/>
 
 		        		<Route

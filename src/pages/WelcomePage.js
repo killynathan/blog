@@ -9,26 +9,36 @@ const WelcomePage = () => {
 			paddingBottom: 120,
 			margin: '0px auto',
 			width: 800,
-			fontFamily: 'Open Sans'
+			fontFamily: 'Open Sans',
 		},
 		name: {
-			fontFamily: 'Lora',
+			fontFamily: 'Courgette',
 			fontSize: 70,
 			textAlign: 'center'
 		},
 		subName: {
 			fontSize: 20,
-			marginBottom: 100,
+			marginBottom: 50,
 			textAlign: 'center'
 		},
+		buttons: {
+			height: 50,
+			width: 420,
+			margin: '0 auto',
+			marginBottom: 100
+		},
 		button: {
-			fontFamily: 'Lora',
-			height: 30,
-			width: 100,
+			fontFamily: 'Open Sans',
+			height: 50,
+			width: 130,
 			borderRadius: 5,
-			marginBottom: 150,
-			marginRight: 10,
-			marginLeft: 10
+			marginRight: 40,
+			marginLeft: 40,
+			backgroundColor: 'skyblue',
+			fontSize: 20,
+			color: 'white',
+			border: 'none',
+			cursor: 'pointer'
 		},
 		title: {
 			fontSize: 25
@@ -44,8 +54,10 @@ const WelcomePage = () => {
 			<h1 style={styles.name}>Lyfe</h1>
 			<p style={styles.subName}>A story driven website</p>
 
-			{/*<Link to='/login'><button style={styles.button}>Login</button></Link>
-			<Link to='/register'><button style={styles.button}>Register</button></Link>*/}
+			<div style={styles.buttons}>
+				<Link to='/login'><button style={styles.button}>Login</button></Link>
+				<Link to='/register'><button style={styles.button}>Register</button></Link>
+			</div>
 
 			<p style={styles.title}>Write without distractions</p>
 

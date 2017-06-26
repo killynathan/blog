@@ -1,5 +1,23 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body{
+	background-color: ;
+}
+
 .page {
 	padding-top: 45px;
+}
+
+a {
+	text-decoration: none;
+}
+
+.pageWidth {
+	width: 800px;
+	margin: 0 auto;
 }
 
 ul {
@@ -8,4 +26,10 @@ ul {
 
 a {
 	color: black;
+}
+
+@media (max-width: 800px) {
+	.pageWidth {
+		width: 95%;
+	}
 }

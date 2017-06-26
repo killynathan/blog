@@ -1,18 +1,16 @@
 import React from 'react';
-import BlogPost from '../components/BlogPost';
+import Blogpost from '../components/Blogpost';
 
 const BlogPostPage = ({blogPost}) => {
 	const styles = {
 		page: {
-			paddingTop: 100,
-			width: 600,
-			margin: '0 auto'
+			paddingTop: 100
 		}
 	};
 
 	return (
-		<div style={styles.page}>
-			<BlogPost blogPost={blogPost}/>
+		<div style={styles.page} className='pageWidth'>
+			<Blogpost blogpost={blogPost}/>
 		</div>
 	);
 };

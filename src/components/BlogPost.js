@@ -1,46 +1,47 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 
-const BlogPost = ({blogPost}) => {
-
+const Blogpost = ({blogpost}) => {
 	const styles = {
 		blogPost: {
 			marginBottom: 100,
-			fontFamily: 'Lora'	
+			fontFamily: 'Lora',	
 		},
 
 		title: {
 			fontFamily: 'Lora',
-			marginBottom: 7,
-			fontSize: 40
+			fontSize: 50
 		},
 
 		body: {
 			fontFamily: 'Open Sans',
 			color: 'rgb(77, 77, 77)',
-			fontSize: 17,
-			marginTop: 20
+			fontSize: 20,
+			marginTop: 30
 		},
 
 		author: {
-			display: 'inline-block'
+			display: 'inline-block',
+			fontSize: 17
 		},
 
 		date: {
 			display: 'inline-block',
-			float: 'right'
+			float: 'right',
+			fontSize: 17
 		}
 	};
 
-	const date = new Date(blogPost.date);
+	const date = new Date(blogpost.date);
 	return (
 
 		<div style={styles.blogPost}>
-			<h1 style={styles.title}>{blogPost.title}</h1>
-			<p style={styles.author}>by: {blogPost.author}</p>
+			<Link to={'/b/' + blogpost._id}><h1 style={styles.title}>{blogpost.title}</h1></Link>
+			<p style={styles.author}>by: {blogpost.author}</p>
 			<p style={styles.date}>{date.toDateString().substring(4)}</p>
-			<p style={styles.body}>{blogPost.body}</p>
+			<p style={styles.body}>{blogpost.body}</p>
 		</div>
 	)
 }
 
-export default BlogPost; 
+export default Blogpost; 

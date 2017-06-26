@@ -7,6 +7,10 @@ export const saveToken = (token) => {
 };
 
 export const getToken = () => {
+	var token = localStorage[tokenName];
+	if (token === 'undefined') {
+		return null;
+	}
 	return localStorage[tokenName];
 };
 

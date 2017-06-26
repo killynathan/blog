@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {getBlogPost} from '../services/data/data';
+import {getBlogpost} from '../services/data/data';
 import BlogPostPage from './BlogPostPage';
 
 class BlogPostPageContainer extends Component {
@@ -20,9 +20,8 @@ class BlogPostPageContainer extends Component {
 	}
 
 	setBlogPost(id) {
-		getBlogPost(id).then((data) => {
-			console.log(data);
-			if (data.message !== 'success') this.setState({message: data.message});
+		getBlogpost(id).then((data) => {
+			if (!data.data) this.setState({message: data.message});
 			else {
 				this.setState({blogPost: data.data});
 			}

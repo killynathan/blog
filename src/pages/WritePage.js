@@ -7,9 +7,7 @@ const WritePage = ({postTitle, postBody, handleTitleChange, handleBodyChange, ha
 	const styles = {
 
 		page: {
-			width: 700,
-			height: '100vh',
-			margin: '0 auto'
+			height: '100vh'
 		},
 		form: {
 			paddingTop: 80
@@ -24,7 +22,7 @@ const WritePage = ({postTitle, postBody, handleTitleChange, handleBodyChange, ha
 			paddingTop: 10,
 			fontFamily: 'Lora',
 			fontWeight: 700,
-			fontSize: 25,
+			fontSize: 30,
 			border: 'white',
 			outline: 'none'
 		},
@@ -32,7 +30,7 @@ const WritePage = ({postTitle, postBody, handleTitleChange, handleBodyChange, ha
 			display: 'block',
 			width: '100%',
 			fontFamily: 'Open Sans',
-			fontSize: 20,
+			fontSize: 25,
 			outline: 'none',
 			resize: 'none',
 			border: 'white'
@@ -42,12 +40,11 @@ const WritePage = ({postTitle, postBody, handleTitleChange, handleBodyChange, ha
 	autosize(document.getElementById('textarea'));
 
 	return (
-		<div style={styles.page}>
+		<div style={styles.page} className='pageWidth'>
 			<form onSubmit={handleSubmit} style={styles.form}>
 				<button type='submit' style={styles.button}>Submit</button>
 				<input value={postTitle} onChange={handleTitleChange} placeholder='Title' style={styles.titleInput}/>
 				<textarea id='textarea' value={postBody} onChange={handleBodyChange} style={styles.bodyInput} placeholder='Body'/>
-				
 			</form>
 		</div>
 	)
